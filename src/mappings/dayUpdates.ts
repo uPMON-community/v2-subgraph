@@ -2,10 +2,10 @@
 import { BigDecimal, BigInt, EthereumEvent } from '@graphprotocol/graph-ts'
 import { Bundle, Pair, PairDayData, Token, TokenDayData, UniswapDayData, UniswapFactory } from '../types/schema'
 import { PairHourData } from './../types/schema'
-import { FACTORY_ADDRESS, ONE_BI, ZERO_BD, ZERO_BI } from './helpers'
+import { getFactoryAddress, ONE_BI, ZERO_BD, ZERO_BI } from './helpers'
 
 export function updateUniswapDayData(event: EthereumEvent): UniswapDayData {
-  let uniswap = UniswapFactory.load(FACTORY_ADDRESS)
+  let uniswap = UniswapFactory.load(getFactoryAddress(event.address))
   let timestamp = event.block.timestamp.toI32()
   let dayID = timestamp / 86400
   let dayStartTimestamp = dayID * 86400

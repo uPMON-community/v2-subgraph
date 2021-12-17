@@ -8,7 +8,26 @@ import { Factory as FactoryContract } from '../types/templates/Pair/Factory'
 import { TokenDefinition } from './tokenDefinition'
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
-export const FACTORY_ADDRESS = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
+export const UNICLY_FACTORY_ADDRESS = '0xbAcC776b231c571a7e6ab7Bc2C8a099e07153377'
+export const UNISWAP_FACTORY_ADDRESS = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
+
+export let uniswapStableCoinPairs: Address[] = [
+  Address.fromString('0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc'), // USDC_WETH
+  Address.fromString('0xa478c2975ab1ea89e8196811f51a7b7ade33eb11'), // DAI_WETH
+  Address.fromString('0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852') // USDT_WETH
+];
+
+export function getFactoryAddress(addr: Address): string {
+  let isUniswapStableCoinPair: boolean = false
+  for (let i = 0; i < uniswapStableCoinPairs.length; i++) {
+    if (addr.equals(uniswapStableCoinPairs[i])) {
+      isUniswapStableCoinPair = true;
+      break;
+    }
+  }
+
+  return isUniswapStableCoinPair ? UNISWAP_FACTORY_ADDRESS : UNICLY_FACTORY_ADDRESS
+}
 
 export let ZERO_BI = BigInt.fromI32(0)
 export let ONE_BI = BigInt.fromI32(1)
@@ -16,7 +35,7 @@ export let ZERO_BD = BigDecimal.fromString('0')
 export let ONE_BD = BigDecimal.fromString('1')
 export let BI_18 = BigInt.fromI32(18)
 
-export let factoryContract = FactoryContract.bind(Address.fromString(FACTORY_ADDRESS))
+export let uniclyFactoryContract = FactoryContract.bind(Address.fromString(UNICLY_FACTORY_ADDRESS))
 
 // rebass tokens, dont count in tracked volume
 export let UNTRACKED_PAIRS: string[] = ['0x9ea3b5b4ec044b70375236a281986106457b20ef']

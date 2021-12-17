@@ -1,23 +1,42 @@
 /* eslint-disable prefer-const */
-import { log } from '@graphprotocol/graph-ts'
+import { Address, log } from '@graphprotocol/graph-ts'
 import { PairCreated } from '../types/Factory/Factory'
 import { Bundle, Pair, Token, UniswapFactory } from '../types/schema'
 import { Pair as PairTemplate } from '../types/templates'
 import {
-  FACTORY_ADDRESS,
+  UNICLY_FACTORY_ADDRESS,
   fetchTokenDecimals,
   fetchTokenName,
   fetchTokenSymbol,
   fetchTokenTotalSupply,
   ZERO_BD,
   ZERO_BI,
+  getFactoryAddress,
+  uniswapStableCoinPairs,
 } from './helpers'
+
+export function handleNewPairFromUniswap(event: PairCreated): void {
+  let isUniswapStableCoinPair: boolean = false;
+  for (let i = 0; i < uniswapStableCoinPairs.length; i++) {
+    if (event.params.pair.equals(uniswapStableCoinPairs[i])) {
+      isUniswapStableCoinPair = true;
+      break;
+    }
+  }
+
+  if (!isUniswapStableCoinPair) {
+    // we don't need the other pools from uniswap
+    return;
+  }
+
+  handleNewPair(event);
+}
 
 export function handleNewPair(event: PairCreated): void {
   // load factory (create if first exchange)
-  let factory = UniswapFactory.load(FACTORY_ADDRESS)
+  let factory = UniswapFactory.load(getFactoryAddress(event.params.pair))
   if (factory === null) {
-    factory = new UniswapFactory(FACTORY_ADDRESS)
+    factory = new UniswapFactory(UNICLY_FACTORY_ADDRESS)
     factory.pairCount = 0
     factory.totalVolumeETH = ZERO_BD
     factory.totalLiquidityETH = ZERO_BD
@@ -31,6 +50,7 @@ export function handleNewPair(event: PairCreated): void {
     bundle.ethPrice = ZERO_BD
     bundle.save()
   }
+
   factory.pairCount = factory.pairCount + 1
   factory.save()
 
