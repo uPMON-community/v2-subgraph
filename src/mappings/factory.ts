@@ -36,7 +36,7 @@ export function handleNewPair(event: PairCreated): void {
   // load factory (create if first exchange)
   let factory = UniswapFactory.load(getFactoryAddress(event.params.pair))
   if (factory === null) {
-    factory = new UniswapFactory(UNICLY_FACTORY_ADDRESS)
+    factory = new UniswapFactory(getFactoryAddress(event.params.pair))
     factory.pairCount = 0
     factory.totalVolumeETH = ZERO_BD
     factory.totalLiquidityETH = ZERO_BD

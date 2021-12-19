@@ -1,28 +1,28 @@
 /* eslint-disable prefer-const */
-import { BigInt, BigDecimal, store, Address, log } from '@graphprotocol/graph-ts'
+import { Address, BigDecimal, BigInt, log, store } from '@graphprotocol/graph-ts'
 import {
-  Pair,
-  Token,
-  UniswapFactory,
-  Transaction,
-  Mint as MintEvent,
+  Bundle,
   Burn as BurnEvent,
+  Mint as MintEvent,
+  Pair,
   Swap as SwapEvent,
-  Bundle
+  Token,
+  Transaction,
+  UniswapFactory
 } from '../types/schema'
-import { Pair as PairContract, Mint, Burn, Swap, Transfer, Sync } from '../types/templates/Pair/Pair'
-import { updatePairDayData, updateTokenDayData, updateUniswapDayData, updatePairHourData } from './dayUpdates'
-import { getEthPriceInUSD, findEthPerToken, getTrackedVolumeUSD, getTrackedLiquidityUSD } from './pricing'
+import { Burn, Mint, Pair as PairContract, Swap, Sync, Transfer } from '../types/templates/Pair/Pair'
+import { updatePairDayData, updatePairHourData, updateTokenDayData, updateUniswapDayData } from './dayUpdates'
+import { findEthPerToken, getEthPriceInUSD, getTrackedLiquidityUSD, getTrackedVolumeUSD } from './pricing'
 import {
-  convertTokenToDecimal,
   ADDRESS_ZERO,
+  BI_18,
+  convertTokenToDecimal,
+  createLiquidityPosition,
+  createLiquiditySnapshot,
+  createUser,
   getFactoryAddress,
   ONE_BI,
-  createUser,
-  createLiquidityPosition,
-  ZERO_BD,
-  BI_18,
-  createLiquiditySnapshot
+  ZERO_BD
 } from './helpers'
 
 function isCompleteMint(mintId: string): boolean {

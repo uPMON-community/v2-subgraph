@@ -36,6 +36,9 @@ export let ONE_BD = BigDecimal.fromString('1')
 export let BI_18 = BigInt.fromI32(18)
 
 export let uniclyFactoryContract = FactoryContract.bind(Address.fromString(UNICLY_FACTORY_ADDRESS))
+export let uniswapFactoryContract = FactoryContract.bind(Address.fromString(UNISWAP_FACTORY_ADDRESS))
+
+
 
 // rebass tokens, dont count in tracked volume
 export let UNTRACKED_PAIRS: string[] = ['0x9ea3b5b4ec044b70375236a281986106457b20ef']

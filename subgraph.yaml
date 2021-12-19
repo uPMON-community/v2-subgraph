@@ -8,9 +8,9 @@ dataSources:
     name: UniswapFactory
     network: mainnet
     source:
-      address: '0xbAcC776b231c571a7e6ab7Bc2C8a099e07153377'
+      address: '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
       abi: Factory
-      startBlock: 12142298
+      startBlock: 10000835
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
