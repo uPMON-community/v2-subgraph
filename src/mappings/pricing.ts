@@ -6,7 +6,7 @@ import {
   ADDRESS_ZERO,
   ONE_BD,
   UNTRACKED_PAIRS,
-  uniswapFactoryContract
+  uniswapFactoryContract, uniclyFactoryContract
 } from './helpers'
 
 const WETH_ADDRESS = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
@@ -85,6 +85,9 @@ export function findEthPerToken(token: Token): BigDecimal {
   // loop through whitelist and check if paired with any
   for (let i = 0; i < WHITELIST.length; ++i) {
     let pairAddress = uniswapFactoryContract.getPair(Address.fromString(token.id), Address.fromString(WHITELIST[i]))
+    if (pairAddress.toHexString() === ADDRESS_ZERO) {
+      pairAddress = uniclyFactoryContract.getPair(Address.fromString(token.id), Address.fromString(WHITELIST[i]))
+    }
     if (pairAddress.toHexString() != ADDRESS_ZERO) {
       let pair = Pair.load(pairAddress.toHexString())
       if (pair.token0 == token.id && pair.reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
