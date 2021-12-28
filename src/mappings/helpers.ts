@@ -9,12 +9,12 @@ import { TokenDefinition } from './tokenDefinition'
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 export const UNICLY_FACTORY_ADDRESS = '0xbAcC776b231c571a7e6ab7Bc2C8a099e07153377'
-export const UNISWAP_FACTORY_ADDRESS = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
+export const UNISWAP_FACTORY_ADDRESS = '0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac'
 
 export let uniswapStableCoinPairs: Address[] = [
-  Address.fromString('0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc'), // USDC_WETH
-  Address.fromString('0xa478c2975ab1ea89e8196811f51a7b7ade33eb11'), // DAI_WETH
-  Address.fromString('0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852') // USDT_WETH
+  Address.fromString('0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8'), // USDC_WETH
+  Address.fromString('0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f'), // DAI_WETH
+  Address.fromString('0x06da0fd433c1a5d7a4faa01111c044910a184553') // USDT_WETH
 ];
 
 export function getFactoryAddress(addr: Address): string {
